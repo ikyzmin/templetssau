@@ -12,14 +12,15 @@ public class ActorRunner {
     private ActorRef[] filters = new ActorRef[COUNT];
     private static String ACTOR_SYSTEM_NAME = "PrimeNumberSystem";
     private static String GENERATOR = "generator";
+    private static String FILTER = "filter%d";
 
-    public void run(){
+    public void run() {
 
         ActorSystem actorSystem = ActorSystem.create(ACTOR_SYSTEM_NAME);
         ActorRef generator = actorSystem.actorOf(Generator.props(), GENERATOR);
-        for (int i=0;i<COUNT;i++){
-            filters[i] = actorSystem.actorOf(Filter.props());
-            generator.tell(String.format("hello from filter %s",i),filters[i]);
+        for (int i = 0; i < COUNT; i++) {
+            filters[i] = actorSystem.actorOf(Filter.props(), String.format(FILTER, i));
+            generator.tell(String.format("hello from filter %s", i), filters[i]);
         }
         actorSystem.terminate();
     }

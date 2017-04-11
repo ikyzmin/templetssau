@@ -22,6 +22,7 @@ public class Generator extends UntypedActor {
     public void onReceive(Object o) throws Throwable {
         if (o instanceof String) {
             System.out.println(o);
+            System.out.println(String.format("sender %s", getSender()));
         }
     }
 
